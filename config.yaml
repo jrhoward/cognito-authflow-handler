@@ -1,0 +1,14 @@
+server:
+  domain: localhost
+  port: 4000
+  authHandlerRedirect: localhost/redirect
+  logoutHandlerRedirect: localhost
+cognito:
+  oauthServer: https://<hosted endpoint>.auth.<region>.amazoncognito.com
+  callBackUrl: http://localhost:80/auth
+  clientId: <app client id>
+  clientSecret: <app client secret>
+  poolId: <user pool id>
+  scope: <some scope>
+  awsRegion: <aws region>
+  
