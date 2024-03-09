@@ -29,6 +29,5 @@ func get(propertyName string) string {
 		return secrets.Cognito.ClientSecret
 	default:
 		return ""
-
 	}
 }

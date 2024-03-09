@@ -3,6 +3,8 @@ server:
   port: 4000
   authHandlerRedirect: localhost/redirect
   logoutHandlerRedirect: localhost
+  idCookieName:
+  refreshCookieName:
 cognito:
   oauthServer: https://<hosted endpoint>.auth.<region>.amazoncognito.com
   callBackUrl: http://localhost:80/auth

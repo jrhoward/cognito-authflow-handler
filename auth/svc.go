@@ -30,15 +30,15 @@ func setCognitoToken(value string, refresh bool) (Tokens, error) {
 		body.Set("code", value)
 		body.Set("grant_type", "authorization_code")
 		body.Set("redirect_uri", config.Get("callBackUrl"))
-		body.Set("scope", config.Get("scope"))
+		//body.Set("scope", config.Get("scope"))
 	}
 
-	client := &http.Client{}
 	r, _ := http.NewRequest(http.MethodPost, oauthServer, strings.NewReader(body.Encode()))
-	clientAuth := base64.StdEncoding.EncodeToString([]byte(get("clientId") + ":" + get("clientSecret")))
-	r.Header.Add("Authorization", "Basic "+clientAuth)
+	clientAuth := "Basic " + base64.StdEncoding.EncodeToString([]byte(get("clientId")+":"+get("clientSecret")))
+	r.Header.Add("Authorization", clientAuth)
 	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	var t Tokens
+	client := &http.Client{}
 	resp, err := client.Do(r)
 	if err != nil {
 		return t, err
@@ -58,10 +58,7 @@ func validateCognitoToken(tokenString string) error {
 	})
 	err := validator.Validate(tokenString)
 
-	if err != nil {
-		return err
-	}
-	return nil
+	return err
 }
 
 func revokeToken(refreshToken string) error {
@@ -72,8 +69,8 @@ func revokeToken(refreshToken string) error {
 
 	client := &http.Client{}
 	r, _ := http.NewRequest(http.MethodPost, oauthServer, strings.NewReader(body.Encode()))
-	clientAuth := base64.StdEncoding.EncodeToString([]byte(get("clientId") + ":" + get("clientSecret")))
-	r.Header.Add("Authorization", "Basic "+clientAuth)
+	clientAuth := "Basic " + base64.StdEncoding.EncodeToString([]byte(get("clientId")+":"+get("clientSecret")))
+	r.Header.Add("Authorization", clientAuth)
 	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	resp, err := client.Do(r)
 	if err != nil {
