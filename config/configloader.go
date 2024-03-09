@@ -11,6 +11,8 @@ type configDatabase struct {
 		AuthHandlerRedirect   string `yaml:"authHandlerRedirect" env-description:"" env-required:""`
 		LogoutHandlerRedirect string `yaml:"logoutHandlerRedirect" env-description:"" env-required:""`
 		CookieMaxAge          int    `yaml:"cookieMaxAge" env-description:"" env-required:""`
+		IdCookieName          string `yaml:"idCookieName" env-description:"" env-required:""`
+		RefreshCookieName     string `yaml:"refreshCookieName" env-description:"" env-required:""`
 	} `yaml:"server"`
 	Cognito struct {
 		OauthServer string `yaml:"oauthServer" env-description:"" env-required:""`
@@ -85,6 +87,10 @@ func Get(propertyName string) string {
 		return config.Cognito.Scope
 	case "awsRegion":
 		return config.Cognito.AwsRegion
+	case "idCookieName":
+		return config.Server.IdCookieName
+	case "refreshCookieName":
+		return config.Server.RefreshCookieName
 	default:
 		return ""
 

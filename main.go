@@ -34,9 +34,9 @@ func main() {
 	router.HandleFunc("/auth", auth.AuthWrapper).Methods("GET")
 	router.HandleFunc("/logout", auth.LogoutHandler).Methods("GET")
 	listening := config.GetServerHost()
-	logInfo.Println("main starting the server at " + listening)
+	logInfo.Println("starting the server at " + listening)
 	err = http.ListenAndServe(listening, router)
 	if err != nil {
-		logError.Fatal("main could not start the server", err)
+		logError.Fatal("could not start the server", err)
 	}
 }
