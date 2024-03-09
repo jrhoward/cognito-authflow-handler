@@ -1,6 +1,6 @@
 # cognito-authflow-handler
 
-A small web application that implements the client part of authorization code flow (see https://tools.ietf.org/html/rfc6749#section-4.1) with AWS Cognito as an Authorization Server.
+A small web application that implements the client part of OAUTH2 authorization code flow (see https://tools.ietf.org/html/rfc6749#section-4.1) with AWS Cognito as an Authorization Server.
 
 
 ## Proxy Set Up
@@ -30,7 +30,7 @@ http{
 
             try_files /secure.html /404.html;
         }
-
+        # Cognito hosted UI to login
         location = /login {
             return 301 https://<resourceserver>.auth.<region>.amazoncognito.com/oauth2/authorize?...;
         }
