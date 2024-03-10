@@ -19,6 +19,12 @@ on:
 
 permissions: read-all
 
+# env:
+#   VERSION:
+#   COMMIT: ${{ env.GITHUB_SHA}}
+#   COMMIT_DATE:
+#   TREE_STATE:
+
 jobs:
   # ========================================================================================================================================
   #     Prerequesite: Create a .slsa-goreleaser.yml in the root directory of your project.
