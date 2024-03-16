@@ -11,8 +11,6 @@ import (
 
 const cookiePaths = "/"
 
-var domain = config.Get("domain")
-
 var LogError = log.New(os.Stdout, "ERROR ", log.LstdFlags|log.Lshortfile|log.Lmsgprefix)
 var LogInfo = log.New(os.Stdout, "INFO ", log.LstdFlags|log.Lshortfile|log.Lmsgprefix)
 
@@ -90,6 +88,7 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func setAuthCookies(w http.ResponseWriter, token Tokens) {
+	var domain = config.Get("domain")
 	cookieMaxAge := config.GetCookieMaxAge()
 	http.SetCookie(w, &http.Cookie{Name: config.Get("idCookieName"), Value: token.Id_token,
 		SameSite: http.SameSiteLaxMode, HttpOnly: true, Secure: true, Domain: domain, Path: cookiePaths, MaxAge: cookieMaxAge})
@@ -98,6 +97,9 @@ func setAuthCookies(w http.ResponseWriter, token Tokens) {
 }
 
 func expireCookies(w http.ResponseWriter) {
-	http.SetCookie(w, &http.Cookie{Name: config.Get("idCookieName"), MaxAge: -1})
-	http.SetCookie(w, &http.Cookie{Name: config.Get("refreshCookieName"), MaxAge: -1})
+	domain := config.Get("domain")
+	http.SetCookie(w, &http.Cookie{Name: config.Get("idCookieName"),
+		HttpOnly: true, Secure: true, Domain: domain, Path: cookiePaths, MaxAge: -1})
+	http.SetCookie(w, &http.Cookie{Name: config.Get("refreshCookieName"),
+		HttpOnly: true, Secure: true, Domain: domain, Path: cookiePaths, MaxAge: -1})
 }
